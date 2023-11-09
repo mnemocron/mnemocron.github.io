@@ -1,16 +1,14 @@
 ---
 layout: page
-title: About me
-subtitle: Why you'd want to go on a date with me
+title: About simonmartin.ch
+subtitle: About another electronics engineering blog
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+I am Simon, a recent MSc graduate in electrical engineering (and information technology).
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+For some people engineering is just a job that pays the bills. Not for me. It never was.
+Engineering has always been a passion that can be both a job and a hobby - with the difference that you can swap your tinkering for a good book if you need a break from problem solving.
+This blog serves as a showcase for some of my hobby projects to come. Some projects are awesome, some are borderline low-level and some are just plain silly.
 
-What else do you need?
+However, my main focus will be in embedded projects using FPGA or other forms of low-level programming.
 
-### My story
-
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](https://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
