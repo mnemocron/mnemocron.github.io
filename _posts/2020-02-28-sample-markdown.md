@@ -46,6 +46,15 @@ begin
 end process p_latch;
 ~~~
 
+~~~
+u32 val,adr;
+for(int i=0;i<0x100;i++){
+  adr = XPAR_AXI_PCIE_0_BASEADDR + i*4;
+  val = Xil_In32(adr);
+  xil_printf("%08x %08x\n\r", adr, val);
+}
+~~~
+
 And here is the same code with syntax highlighting:
 
 ```vhdl
@@ -57,6 +66,15 @@ begin
 end process p_latch;
 ```
 
+```c
+u32 val,adr;
+for(int i=0;i<0x100;i++){
+  adr = XPAR_AXI_PCIE_0_BASEADDR + i*4;
+  val = Xil_In32(adr);
+  xil_printf("%08x %08x\n\r", adr, val);
+}
+```
+
 And here is the same code yet again but with line numbers:
 
 {% highlight vhdl linenos %}
@@ -66,6 +84,15 @@ begin
     a_reg <= a;
   end if;
 end process p_latch;
+{% endhighlight %}
+
+{% highlight c linenos %}
+u32 val,adr;
+for(int i=0;i<0x100;i++){
+  adr = XPAR_AXI_PCIE_0_BASEADDR + i*4;
+  val = Xil_In32(adr);
+  xil_printf("%08x %08x\n\r", adr, val);
+}
 {% endhighlight %}
 
 ## Boxes
