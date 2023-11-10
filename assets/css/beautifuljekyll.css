@@ -126,7 +126,7 @@ img {
 /* --- Navbar --- */
 
 .navbar-custom {
-  background-color: {{ site.navbar-col | default: "#EAEAEA" }};
+  background-color: {{ site.navbar-col | default: "#f5f6fa" }};
   border-bottom: 1px solid {{ site.navbar-border-col | default: "#DDDDDD" }};
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   {% if site.navbar-img %}
@@ -956,23 +956,23 @@ pre {
 }
 
 .box-note {
-  background-color: #eee;
-  border-left-color: #2980b9;
+  background-color: rgba(114, 83, 237, 0.2);
+  border-left-color: #381885;
 }
 
 .box-warning {
-  background-color: #fdf5d4;
-  border-left-color: #f1c40f;
+  background-color: rgba(255, 235, 130, 0.2);
+  border-left-color: #e7af06;
 }
 
 .box-error {
-  background-color: #f4dddb;
-  border-left-color: #c0392b;
+  background-color: rgba(247, 126, 126, 0.2);
+  border-left-color: #dd2e2e;
 }
 
 .box-success {
-  background-color: #98FB98;
-  border-left-color: #3CB371;
+  background-color: rgba(65, 214, 147, 0.2);
+  border-left-color: #026e57;
 }
 
 /* --- Misc blog post styles --- */
