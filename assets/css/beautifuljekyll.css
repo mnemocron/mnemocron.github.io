@@ -891,12 +891,11 @@ pre {
   margin: 0;
 }
 .highlight > pre {
-  background-image: linear-gradient(
-    rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1.5em, rgba(0,0,0,0.02) 1.5em, rgba(0,0,0,0.02) 3em);
+  // background-image: linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1.5em, rgba(0,0,0,0.02) 1.5em, rgba(0,0,0,0.02) 3em);
   background-size: auto 3em;
   background-position-y: 0.625rem;
   border: 1px solid rgba(0,0,0,0.1);
-  border-left: 0.4375rem solid #444;
+  border-left: 0.4375rem solid #e1e1e1;
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
   padding: 0;
@@ -910,9 +909,9 @@ pre {
   margin: 0;
 }
 .highlight pre.lineno {
-  color: rgba(0,0,0,0.3);
+  color: #5b5b5b
   border-radius: 0;
-  border-right: 2px solid #444;
+  border-right: 2px solid #e1e1e1;
 }
 
 /* Make line numbers unselectable: excludes line numbers from copy-paste user ops */
