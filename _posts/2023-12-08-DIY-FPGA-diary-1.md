@@ -60,7 +60,7 @@ The first one is not easily answered.
 The more inputs a LUT has, the more complex logical functions can be implemented in a single LUT but resources are wasted if the logical functions are less complex.
 The fewer inputs a LUT has, the less LUTs are wasted on simple functions but multiple LUTs must be cascaded for more complex functions.
 The industry sweet spot seems to be around 6 bit input LUTs as they are currently used in Xilinx FPGAs.
-Mandatory reference to the infamous post on LUT galore. []
+Mandatory reference to the infamous [humor post about 8 LUTs](http://fpga.org/2015/03/06/stop-everything-were-doing-8-luts/).
 The second question regarding having two output bits per LUT I casually decided against because I simply have no easy way to deal with the extra output bits. Because it inevitably means that the output width of my CLB is doubled from 4 to 8 bits which do not natively fit on my 4+2 bit wide interconnect.
 And I simply do not want to expand the interconnect further as it already consumes lots of resources.
 There would have been one scenario where it would be useful to have at least an internal second output: the carry chain.
