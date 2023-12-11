@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DIY FPGA diary 1 - Configurable Logic Slice (CLB)
+title: DIY FPGA diary 1 - Configurable Logic Slice
 subtitle: How to design the insides of an FPGA
 gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]
@@ -50,7 +50,7 @@ This post selection process can be configured to pick any of the following input
 The next step is to build the LUT. Early on I knew that the LUT would be built using the good ol' `74HC595` 8 bit shift register.
 It uses a straight forward SPI interface where the bitstream is shifted in and remains there for as long as the chip is powered on. There do not seem many alternatives which would offer 16 bits in a single chip so the 595 it is.
 The LUT essentially consists of this memory and a big multiplexer selecting (looking up) the correct bit in the memory (table) for a given input.
-Again 16:1 multiplexer do not seem to be such a common IC type. Therefore the smallest LUT in my design is going to be a `LUT3` built with one `74HC595` and another 74HC??? as a 8:1 multiplexer. Two LUT3 can then be summarized to a single LUT4 with another 2:1 multiplexer which is easy to find. 
+Again 16:1 multiplexer do not seem to be such a common IC type. Therefore the smallest LUT in my design is going to be a `LUT3` built with one `74HC595` and another `74HC151` as a 8:1 multiplexer. Two LUT3 can then be summarized to a single LUT4 with another 2:1 multiplexer which is easy to find. 
 
 Here several design options / questions arise:
 - How big should the LUT be per bit?
