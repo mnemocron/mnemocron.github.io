@@ -18,8 +18,8 @@ Terminology for the modular parts inside the FPGA fabric differ from manufacture
 I will just call my group of LUTs a configurable logic slice (`CLB`).
 
 My very first idea of how a CLB could be implemented was to take a single SRAM chip with parallel address input and data I/Os. 
-Since all SRAM of today consist of several kbit of memory and therefore fairly large address and data I/O busses this would be a waste of resources and complexits:
-- resize the memory to something a lot smaller (e.g. only using 4 out or 12 addresss bits)
+Since all SRAM of today consist of several kbit of memory and therefore fairly large address and data I/O busses this would be a waste of resources and complexities:
+- resize the memory to something a lot smaller (e.g. only using 4 out or 12 address bits)
 - potentially having to deal with kbits of unused data still in the bitstream
 - all output bits would have the same input bit vector
 
@@ -43,7 +43,7 @@ This post selection process can be configured to pick any of the following input
 | `11` | sum mode bit reversed `INMODE_SUM_REVERSE` |
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-in-mux.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-in-mux.png){: .mx-auto.d-block :}
-**Fig 2:** _Input post seletion multiplexer for a single LUT instance._
+**Fig 2:** _Input post selection multiplexer for a single LUT instance._
 
 ### LUT Implementation
 
@@ -71,7 +71,7 @@ I will preface this with a disclaimer: I implemented this feature for pure joy i
 As far as I can remember, special carry chain hardware was introduced in FPGA hardware to make sum operations more performant. The performance bottleneck used to be propagating the carry bit of each bit in an input vector through another LUT instance.
 This delay grew with longer input bit widths. Todays 16/18/25 bit quantized numbers would result in a cascade of 16/18/25 LUTs and subsequently a huge logic and routing delay with the MSB being the critical path.
 The look ahead carry chain essentially pre-calculates the carry bit on every bit of the input vector and then quickly calculates the real sum with the help of an `XOR` gate and two multiplexers per bit.
-I decided against this approach because it complicates the already complex input multiplexers and would add a little bit of (if we are being honest: neglectible) headache to implement the `XOR` and multiplexer in the bitstream.
+I decided against this approach because it complicates the already complex input multiplexers and would add a little bit of (if we are being honest: neglectable) headache to implement the `XOR` and multiplexer in the bitstream.
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-carry-loopback.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-carry-loopback.png){: .mx-auto.d-block :}
 **Fig 3:** _Concept of implementing the look ahead carry chain inside the LUT3 instance with an additional external multiplexer._
