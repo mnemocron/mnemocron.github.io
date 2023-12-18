@@ -63,6 +63,10 @@ Adding another register output stage at the output is shown in _Fig. 4_. Note th
 ![https://mnemocron.github.io/assets/img/skidbuffer/full-skidbuffer.png](https://mnemocron.github.io/assets/img/skidbuffer/full-skidbuffer.png){: .mx-auto.d-block :}
 **Fig 4:** _Schematic block diagram of the minimal skidbuffer._
 
+See also _Fig. 5_ where additional `tlast` and `tstrb` have been merged into the data path of the skidbuffer using a wrapper.
+The VHDL code can be found on the [github repo](https://github.com/mnemocron/axis-skidbuffer/blob/master/ghdl/axis/axis_pipeline.vhd)
 
+![https://mnemocron.github.io/assets/img/skidbuffer/ghdl_sim_axis_register.png](https://mnemocron.github.io/assets/img/skidbuffer/ghdl_sim_axis_register.png){: .mx-auto.d-block :}
+**Fig 5:** _Simulation waveforms of an AXI wrapper around the pipelined skidbuffer._
 
 
