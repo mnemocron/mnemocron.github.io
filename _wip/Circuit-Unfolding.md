@@ -9,26 +9,27 @@ comments: true
 author: Simon
 ---
 
-# WIP
-
 ![https://mnemocron.github.io/assets/img/unfolding/.png](https://mnemocron.github.io/assets/img/unfolding/.png){: .mx-auto.d-block :}
 **Fig 1:** _Example of a 2-way unfolded (2x polyphasic) IIR filter processing two samples per clock cycle._
 
-We are all familiar with the growing demand in computaional power in DSP applications. Radio frequency applications require that several gigasamples are processed on an FPGA that can be clocked at maximum of several hundred of MHz.
-This facilitates the need to use massive parallelization of DSP algorithms.
-For _non-recursive_ algorithms, like FIR filters, this is a no-brainer. See the bottom of this article for a demonstration.
-The main focus shall be on _recursive_ algorithms. The theory behind circuit unfolding can be applied to any FPGA algorithm with internal state variables - not just IIR filters.
+We are all familiar with the growing demand in computaional power in DSP applications. Radio frequency applications require that several gigasamples are processed on an FPGA that can only be clocked at a maximum of several hundred of MHz.
+This facilitates the need to use massive parallelization of DSP algorithms - a so called **multi rate** system. 
+For _non-recursive_ algorithms like FIR filters this is a trivial no-brainer. See the end of this article for a demonstration.
+The main focus here is on _recursive_ algorithms. Note that the theory behind **circuit unfolding** can be applied to any FPGA algorithm with internal state variables - not just IIR filters.
 
-A bit of an introduction first. The theory I am about to present is a sumary of a digital design course I was so lucky to attend during my exchange semester at the Linköpings Universitet in Sweden.
-With a background in applied sciences working on real industry problems, it was refreshing to see a new approach to digital design.
-Just as an example: The institute in Sweden built a demonstration of a 100 GSps FFT on FPGA while colleagues at the school for applied sciences built an FFT design at 2 GSps that was actually used in industrial printers later. Both working on cutting edge performance but with a different goal in mind.
+A bit of backstory first (like all the foodblogs that ramble on about travel experiences before giving you the recipe).
+The theory I am about to present is a summary of a digital design course I was lucky to have attended during my exchange semester at the Linköpings Universitet in Sweden.
+For me with a background in applied sciences, working on real industry problems, it was refreshing to see a more theoretical approach to digital design.
+Just as an anecdote: The institute in Sweden built a demonstration of a 100 GSps FFT on FPGA while my colleagues at the school for applied sciences in Switzerland built an FFT design at 2 GSps that was actually used in industrial printers. 
+Both teams are working on cutting edge performance but each with a different goal in mind.
 
-The course I took provided me with many valuable tools that I can throw at FPGA algorithms.
+The afformentioned class provided me with many valuable tools that I can throw at FPGA algorithms.
 One of which is _Circuit Unfolding_ which has an intuitive and a systematic approach to it.
 
 ### Motivational Example
 
 Let us start with a very basic recursive algorithm, the IIR filter with a single tap in _Fig. 2_.
+Note that it has a critical path of one multiplication and one addition. Since loops cannot be pipelined, this is the path that has to be 
 
 ![https://mnemocron.github.io/assets/img/unfolding/simple-iir.png](https://mnemocron.github.io/assets/img/unfolding/simple-iir.png){: .mx-auto.d-block :}
 **Fig 2:** _Simple, single tap IIR filter._
