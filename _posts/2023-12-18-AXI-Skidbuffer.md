@@ -60,7 +60,7 @@ This changes some of the interactions. However, all valid input (upstream) trans
 
 Adding another register output stage at the output is shown in _Fig. 4_. Note that it will only change the output state once the downstream slave has accepted the data in the output register stage. This mechanism is guaranteed to work given that the upstream master is stalled by the deasserted `ready`.
 
-![https://mnemocron.github.io/assets/img/skidbuffer/full-skidbuffer.png](https://mnemocron.github.io/assets/img/skidbuffer/full-skidbuffer.png){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/skidbuffer/full-pipeline.png](https://mnemocron.github.io/assets/img/skidbuffer/full-pipeline.png){: .mx-auto.d-block :}
 **Fig 4:** _Schematic block diagram of the minimal skidbuffer._
 
 See also _Fig. 5_ where additional `tlast` and `tstrb` have been merged into the data path of the skidbuffer using a wrapper.
