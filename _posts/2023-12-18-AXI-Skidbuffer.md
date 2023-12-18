@@ -2,7 +2,7 @@
 layout: post
 title: AXIS Pipelining using a Skidbuffer
 subtitle: A quick & basic AXI bus template
-gh-repo: mnemocron/my-discrete-fpga
+gh-repo: mnemocron/axis-skidbuffer
 gh-badge: [star, follow]
 tags: [axi, axis, dsp]
 comments: true
