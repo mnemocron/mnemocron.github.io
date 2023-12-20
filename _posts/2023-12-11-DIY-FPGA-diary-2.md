@@ -6,7 +6,6 @@ gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]
 tags: [diy-fpga, vhdl]
 comments: true
-author: Simon
 ---
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-2/crosspoint-sw.png](https://mnemocron.github.io/assets/img/fpga-diary-2/crosspoint-sw.png){: .mx-auto.d-block :}

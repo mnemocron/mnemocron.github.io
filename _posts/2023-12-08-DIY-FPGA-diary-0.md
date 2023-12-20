@@ -6,7 +6,6 @@ gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]
 tags: [diy-fpga]
 comments: true
-author: Simon
 ---
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-0/fpga-arch-tile.png](https://mnemocron.github.io/assets/img/fpga-diary-0/fpga-arch-tile.png){: .mx-auto.d-block :}

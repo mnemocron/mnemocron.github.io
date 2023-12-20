@@ -6,7 +6,6 @@ gh-repo: mnemocron/axis-skidbuffer
 gh-badge: [star, follow]
 tags: [axi, axis, dsp]
 comments: true
-author: Simon
 ---
 
 Yehees, another blog post explaining the concept of the skidbuffer.
