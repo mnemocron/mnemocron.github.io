@@ -80,15 +80,15 @@ Another journey into _modwire-land_ later, we have this problem sorted. However,
 ![https://mnemocron.github.io/assets/img/fpga-diary-4/lut-d.png](https://mnemocron.github.io/assets/img/fpga-diary-4/lut-d.png){: .mx-auto.d-block :}
 **Fig 4:** _Measured LUT output behaviour for LUT_D._
 
-I'll spare you the details (because I don't actually know them myself) but this problem was because of several bad (cold) solder connections.
-After resoldering a bit of everything, it worked and produced a nice diagonal line of 1's.
-Now I can use the above truth table in Excel to create the other LUT functions of an entire 4-bit counter.
+I'll spare you the details (because I don't actually know them myself) but this problem was caused by several bad (cold) solder connections.
+After resoldering a bit of everything, it worked and produced a clean diagonal line of 1's.
+Now I can use the above truth table in Excel to create the remaining LUT functions of an entire 4-bit counter.
 And it works!!
 
-<todo insert gif>
+![https://mnemocron.github.io/assets/img/fpga-diary-4/4-bit-counter-gif.gif](https://mnemocron.github.io/assets/img/fpga-diary-4/4-bit-counter-gif.gif){: .mx-auto.d-block :}
+**Fig 5:** _4 bits counting ahead..._
 
 
 We end with a first conclusion: Yes, it is possible to waste dozzens of 7400-family ICs to recreate half of a single 7400-family IC. I am thrilled to expand this project further.
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-4/fraction-power-meme.png](https://mnemocron.github.io/assets/img/fpga-diary-4/fraction-power-meme.png){: .mx-auto.d-block :}
-**Fig 6:** _._
