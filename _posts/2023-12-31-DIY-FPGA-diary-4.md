@@ -91,4 +91,4 @@ And it works!!
 
 We end with a first conclusion: Yes, it is possible to waste dozzens of 7400-family ICs to recreate half of a single 7400-family IC. I am thrilled to expand this project further.
 
-![https://mnemocron.github.io/assets/img/fpga-diary-4/fraction-power-meme.png](https://mnemocron.github.io/assets/img/fpga-diary-4/fraction-power-meme.png){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/fpga-diary-4/fraction-power-meme.jpg](https://mnemocron.github.io/assets/img/fpga-diary-4/fraction-power-meme.jpg){: .mx-auto.d-block :}
