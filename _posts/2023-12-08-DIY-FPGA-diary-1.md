@@ -8,8 +8,8 @@ tags: [diy-fpga]
 comments: true
 ---
 
-![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-arch.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-arch.png){: .mx-auto.d-block :}
-**Fig 1:** _Concept view of the proposed CLB._
+![https://mnemocron.github.io/assets/img/fpga-diary-1/concept-to-pcb.png](https://mnemocron.github.io/assets/img/fpga-diary-1/concept-to-pcb.png){: .mx-auto.d-block :}
+**Fig 1:** _The CLB from concept to PCB._
 
 Today, my fellow FPGA nerd, I proudly present to you the first module of the shittiest FPGA project.
 The heart of any fully programmable digital logic part: the look up table - or more broadly speaking, a group of look up tables in a slice.
@@ -44,6 +44,11 @@ This post selection process can be configured to pick any of the following input
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-in-mux.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-in-mux.png){: .mx-auto.d-block :}
 **Fig 2:** _Input post selection multiplexer for a single LUT instance._
 
+And seing the CLB in the broader 2D picture where it is interconnected with other logic elements, we have the concept in _Fig. 3_ where terms like _"north"_ and _"west"_ make more sense.
+
+![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-arch.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-arch.png){: .mx-auto.d-block :}
+**Fig 3:** _Concept view of the proposed CLB._
+
 ### LUT Implementation
 
 The next step is to build the LUT. Early on I knew that the LUT would be built using the good ol' `74HC595` 8 bit shift register.
@@ -73,23 +78,24 @@ The look ahead carry chain essentially pre-calculates the carry bit on every bit
 I decided against this approach because it complicates the already complex input multiplexers and would add a little bit of (if we are being honest: neglectable) headache to implement the `XOR` and multiplexer in the bitstream.
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-carry-loopback.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-carry-loopback.png){: .mx-auto.d-block :}
-**Fig 3:** _Concept of implementing the look ahead carry chain inside the LUT3 instance with an additional external multiplexer._
+**Fig 4:** _Concept of implementing the look ahead carry chain inside the LUT3 instance with an additional external multiplexer._
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/Altera-Flex-8000-LE.png](https://mnemocron.github.io/assets/img/fpga-diary-1/Altera-Flex-8000-LE.png){: .mx-auto.d-block :}
-**Fig 4:** _LUT with internal carry chain in the Altera FLEX 8000 FPGA architecture_ ([Altera Flex 8000 Data Sheet](https://flex.phys.tohoku.ac.jp/riron/vhdl/up1/altera/ds/dsf8k.pdf))
+**Fig 5:** _LUT with internal carry chain in the Altera FLEX 8000 FPGA architecture_ ([Altera Flex 8000 Data Sheet](https://flex.phys.tohoku.ac.jp/riron/vhdl/up1/altera/ds/dsf8k.pdf))
 
 Instead I implemented the carry chain like in the following diagrams.
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-look-ahead-carry-example.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-look-ahead-carry-example.png){: .mx-auto.d-block :}
-**Fig 5:** _4 + 4 bit full adder with carry chain showing an example where the unsigned numbers 5 (`0101`) and 13 (`1101`) are being added._
+**Fig 6:** _4 + 4 bit full adder with carry chain showing an example where the unsigned numbers 5 (`0101`) and 13 (`1101`) are being added._
 
 ### Final LUT
 
+Finally, we end up with a full 4 input, single output LUT in _Fig. 7_ or if you want the actual 7400-series implementation check out _Fig. 8_.
+
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png){: .mx-auto.d-block :}
-**Fig 6:** _Complete and detailed diagram of a single `LUT4` instance inside a `CLB` slice including the carry chain and the optional register stage._
+**Fig 7:** _Complete and detailed diagram of a single `LUT4` instance inside a `CLB` slice including the carry chain and the optional register stage._
 
+![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png){: .mx-auto.d-block :}
+**Fig 8:** _Single LUT4 instance schematics in kicad using `74HC595` shift-registers as table and `74HC151` 8:1 multiplexer as the "look-up" part._
 
-
-
-
-
+(Note that I already fixed a bug in this _Fig. 8_ where I connected the `~OE` pin to Vcc instead of GND)
