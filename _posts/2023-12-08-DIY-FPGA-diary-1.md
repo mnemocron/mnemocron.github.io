@@ -95,7 +95,7 @@ Finally, we end up with a full 4 input, single output LUT in _Fig. 7_ or if you 
 ![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png){: .mx-auto.d-block :}
 **Fig 7:** _Complete and detailed diagram of a single `LUT4` instance inside a `CLB` slice including the carry chain and the optional register stage._
 
-![https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png](https://mnemocron.github.io/assets/img/fpga-diary-1/clb-lut4-inst.png){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/fpga-diary-1/kicad-lut4.png](https://mnemocron.github.io/assets/img/fpga-diary-1/kicad-lut4.png){: .mx-auto.d-block :}
 **Fig 8:** _Single LUT4 instance schematics in kicad using `74HC595` shift-registers as table and `74HC151` 8:1 multiplexer as the "look-up" part._
 
 (Note that I already fixed a bug in this _Fig. 8_ where I connected the `~OE` pin to Vcc instead of GND)
