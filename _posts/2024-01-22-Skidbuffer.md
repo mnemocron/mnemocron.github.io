@@ -16,9 +16,12 @@ Before we dive deep into boolean logic structures, I want to mention the sources
 There is an [article over at the ZipCPU blog](https://zipcpu.com/blog/2019/05/22/skidbuffer.html) which helped me understand __what__ a skid buffer does - on an abstracted higher level.
 Unfortunately, it helped me little in understanding how to build a minimal, straight-forward skid buffer without a side quest in formal verification. 
 Something that in hindsight would have been worth understanding - but here I am, with VHDL and no will to either circumvent the formal verification limitations of VHDL or properly learn Verilog.
-Another **very useful article** is available as [part of some Red Pitaya documentation](https://pavel-demin.github.io/red-pitaya-notes/axi-interface-buffers/).
+Another **very useful article** is available on [Pavel Demin's blog](https://pavel-demin.github.io/red-pitaya-notes/axi-interface-buffers/).
 This article takes a different approach and goes straight into the details of how to implement AXI compliant register stages for both the `tready` (_"input"_) and `tdata`/`tvalid` (_"output"_) paths. It even includes pretty schematics :D
-The design does however, have some flaws (or missing features) that I will explain further down.
+The design does however, ~~have some flaws (or missing features)~~. 
+> Pavel kindly asked me what was wrong the design. 
+Admittedly, his solution is already perfect. While "designing" my own skidbuffer (copying Pavel's approach to VHDL) and using it in my designs I was quick to blame any bugs on the skidbuffer. 
+I was specifically interested in the propagation of the flow control signals as notifications (see further down).
 
 The reason why I bothered to build my own skid buffer _slash_ AXIS pipeline stage is to have a fully registered AXI compliant template.
 A template that can be used as a boilerplate to build quick bus modification functions.
@@ -41,7 +44,7 @@ Therefore **the skid buffer is the shortest possible FIFO** of 0 stages in norma
 
 ### Minimal Skid Buffer (`tready` register)
 
-The source in [Red Pitaya notes](https://pavel-demin.github.io/red-pitaya-notes/axi-interface-buffers/) splits the register paths into the _output buffer_ (`tdata`/`tvalid`) path and the _input buffer_ (`tready`) path.
+The source in the [Notes of Pavel Demin](https://pavel-demin.github.io/red-pitaya-notes/axi-interface-buffers/) splits the register paths into the _output buffer_ (`tdata`/`tvalid`) path and the _input buffer_ (`tready`) path.
 _Fig. 1_ shows both registers combined. With `OPT_OUT_REG=False` it acts as a skidbuffer to pipeline `tready`.
 The source code for this buffer is on Github: [skidbuffer.vhd](https://github.com/mnemocron/axis-skidbuffer/blob/master/vhdl/basic/skidbuffer.vhd).
 
@@ -55,7 +58,8 @@ These are:
 1. Rising edge on `tvalid` can activate downstream IP
 2. Rising edge on `tready` can activate upstream IP
 
-The first property, I needed to support pipelining of a custom IP with variable sample rates. The upstream FIFO may be hold `tvalid=1` data at any given time but the downstream IP may only be `tready=1` every _Nth_ or so clock cycle. 
+The first property, I needed to support pipelining of a custom IP with variable sample rates. In my case it was a resampler that supports slower playback of upstream data, hence it produces more data at the AXIS output than it accepts at its input. 
+My upstream FIFO may hold `tvalid=1` data at any given time, to indicate that data is available to be processed. But my downstream IP may only be `tready=1` every _Nth_ or so clock cycle (because it is still processing old samples). 
 In this case `tvalid=1` must propagate to the downstream IP even when the downstream IP is not `tready=1` yet.
 The same accounts for the upstream path using `tready=1`.
 Through some simulations I could verify this behaviour to a satisfying degree.
