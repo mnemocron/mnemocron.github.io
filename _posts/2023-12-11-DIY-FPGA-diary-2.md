@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DIY FPGA diary 2 - Transistor Level Simulation of my FPGA in VHDL
+title: 7400 FPGA diary 2 - Transistor Level Simulation of my FPGA in VHDL
 subtitle: includes tricks to coerce VHDL to behave like Verilog's tranif1
 gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]

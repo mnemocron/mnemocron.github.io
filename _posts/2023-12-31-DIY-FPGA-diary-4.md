@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DIY FPGA diary 4 - Debugging the PCB
+title: 7400 FPGA diary 4 - Debugging the PCB
 subtitle: and documentation of the bitstream
 gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]

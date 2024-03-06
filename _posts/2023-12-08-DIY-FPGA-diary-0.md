@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DIY FPGA diary 0 - Architecture Concept
+title: 7400 FPGA diary 0 - Architecture Concept
 subtitle: How to design the insides of an FPGA
 gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]

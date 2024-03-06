@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DIY FPGA diary 3 - Digital Twin in VHDL
+title: 7400 FPGA diary 3 - Digital Twin in VHDL
 subtitle: simulating the FPGA bitstream before building a PCB
 gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]
