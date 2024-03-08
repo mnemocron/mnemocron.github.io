@@ -18,7 +18,6 @@ Other than that, all of the SW, CBh and CBv are working flawlessly as designed.
 It is now time to verify previously generated and simulated bitstreams on actual hardware.
 But how do you program an FPGA by bitstream directly?
 
-
 ## The Blinky Example
 
 ### 1. Routing
@@ -63,7 +62,7 @@ Since counting to 16 with your fingers, I created another table to look up the b
 ### 3. CLB options
 
 Finally, the CLB itself has a few features that need to be enabled. 
-For proper RTL operation, we enable clocking with the `en_reg_lut_a` bit.
+For proper RTL operation, we enable clocking with the `en_reg_lut_a` bit (`15`).
 
 ### Code
 
@@ -98,10 +97,40 @@ char conf_bits[BITS_CONFIGURED] = {
    101, // CBh: presel_0[2] --> MUX addr +4
    102, // CBh: presel_0[1] --> MUX addr +2
    103, // CBh: presel_0[0] --> MUX addr +1
+   15,
    17,19,21,23,25,27,29,31};
 ```
 
-It looks like assembly for FPGA.
+Here you have it: assembly for FPGA.
 
+### Simulation
+
+![https://mnemocron.github.io/assets/img/fpga-diary-5/simulation-workspace.png](https://mnemocron.github.io/assets/img/fpga-diary-5/simulation-workspace.png){: .mx-auto.d-block :}
+**Fig 5:** _The VHDL simulation workspace programs the bitstream into one FPGA tile and simulates its behaviour: a toggling bit._
+
+### Run on actual hardware
+
+![https://mnemocron.github.io/assets/img/fpga-diary-5/routing-on-pcb.png](https://mnemocron.github.io/assets/img/fpga-diary-5/routing-on-pcb.png){: .mx-auto.d-block :}
+**Fig 6:** _Visual aid of how the configuration is routed on the FPGA tile for a single toggle bit._
+
+### F-max Estimation
+
+![https://mnemocron.github.io/assets/img/fpga-diary-5/toggle-bit-fmax.png](https://mnemocron.github.io/assets/img/fpga-diary-5/toggle-bit-fmax.png){: .mx-auto.d-block :}
+**Fig 7:** _Scope view of the ring oscillator with a frequency of 13.9 MHz._
+
+With the hardware working, I can now test the maximum speed of my FPGA by building a ring-oscillator.
+To do so, I just disable the output register (`en_reg_lut_a` / bit `15`) to switch from RTL to combinatorial logic.
+My scope tells me a toggle rate of some 13.9 MHz (!). This makes me happy. 
+Because in my wildest dreams, I am already considering adding some DSP capabilities with shared hardware.
+Let's say, you have an audio signal, sampled at 8-bit / 44.1 kHz while the larger FPGA runs at a conservative 5 MHz.
+Then you would have approximately 100 clock cycles per sample to perform some DSP. That may be enough for quite a few FIR taps.
+
+## Conclusion
+
+All-in-all a great first success.
+I would say, the greatest challenge so far is not the hardware itself - 7400 logic is simple and straight forward - no, the challenge is keeping both the VHDL model up-to date with the PCB (or vice versa). For example with rev. 2 of the PCB for the CLB I decided last minute, I need a clock enable for the flip flop. 
+Luckily I had some unused _"reserved"_ configuration bits left both on the CLB and the CBh.
+But changing such a thing required me to go back to the VHDL and implement and test this feature as well.
+Then of course, a lot of testing is required that the same bitstream produces the same results in the simulation and on the hardware.
 
 
