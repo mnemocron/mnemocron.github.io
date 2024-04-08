@@ -79,9 +79,9 @@ There is a systematic way to perform unfolding on circuits.
 An internal state from block $$N_i$$ with $$L$$ delay elements is connected to block $$N_j$$ with $$K$$ delay elements.
 With the equations being:
 
-$$ j=(i+L) \mathrm{mod} M $$ (eq. 1)
+$$ j=(i+L)\,\mathrm{mod}\,M $$
 
-$$ K = \floor{ \frac{i+L}{M} } $$ (eq. 2)
+$$ K = \lfloor{ \frac{i+L}{M} } \rfloor $$
 
 ```
 for i=0 to M-1
@@ -113,10 +113,7 @@ The instances are denoted `N0` and `N1`.
 
 Now the systematic equations can be applied and will result in the following table:
 
-| from block `i` | using `L` delays | to block `j` | using `K` delays |
-|:----|:----|:----|:----|
-
-| `i` | `L` | `j` | `K` |
+| **`i`** | **`L`** | **`j`** | **`K`** |
 |:----|:----|:----|:----|
 | `0` | `1` | `1` | `0` |
 | `0` | `2` | `0` | `1` |
