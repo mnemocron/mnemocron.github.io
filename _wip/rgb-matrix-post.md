@@ -25,21 +25,31 @@ Furthermore, a Raspberry Pi Zero WH and a HUB75 adapter from a shady Chinese web
 ### Important commands
 
 
+**How to download only 1min from a 10h youtube Video**
 
+```
+yt-dlp "https://www.youtube.com/watch?v=y9PTNTSpGJs" -f 'bestvideo[height<=360]' --external-downloader ffmpeg --external-downloader-args "-ss 00:00:00 -to 00:01:00" -o "%(title)s_method2.%(ext)s"
+```
 
+**How to crop and rotate a video to match aspect ratio of RGB matrix?**
 
+(you may want to do outsource this to another computer because the Pi Zero performs encoding only at ~5 fps)
+
+```
+ffmpeg -i water-full.webm -vf "crop=90:360:300:0,transpose=2,scale=trunc(oh*a/2)*2:64" -pix_fmt gbrp water.webm
+```
+
+```
+ffmpeg -i water-full.webm -vf "crop=90:360:150:0,transpose=2,scale=trunc(oh*a/2)*2:64" -pix_fmt gbrp water.webm
+```
+
+- ffmpeg List supported pixel formats
 https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2007-May/035617.html
 
+- Crop a video with ffmpeg
 https://video.stackexchange.com/questions/4563/how-can-i-crop-a-video-with-ffmpeg
 
+- Rotate a video with ffmpeg
 https://stackoverflow.com/questions/3937387/rotating-videos-with-ffmpeg
 
-
-yt-dlp "https://www.youtube.com/watch?v=7Gh7yJ4sj8k" -f 'bestvideo[height<=360]' --external-downloader ffmpeg --external-downloader-args "-ss 00:00:00 -to 00:00:55" -o "%(title)s_method2.%(ext)s"
-
-ffmpeg -i water-full.webm -vf "crop=90:360:300:0,transpose=2,scale=trunc(oh*a/2)*2:64" -pix_fmt gbrp water.webm
-
-ffmpeg -i water-full.webm -vf "crop=90:360:150:0,transpose=2,scale=trunc(oh*a/2)*2:64" -pix_fmt gbrp water.webm
-
-scp water.webm simon@192.168.50.168:/home/simon/Videos/water.webm
 
