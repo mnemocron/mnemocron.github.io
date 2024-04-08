@@ -8,6 +8,9 @@ comments: true
 author: Simon
 ---
 
+
+*This post is work in progress*
+
 ![https://mnemocron.github.io/assets/img/unfolding/.png](https://mnemocron.github.io/assets/img/unfolding/.png){: .mx-auto.d-block :}
 **Fig 1:** _Example of a 2-way unfolded (2x polyphasic) IIR filter processing two samples per clock cycle._
 
