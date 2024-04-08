@@ -2,7 +2,6 @@
 layout: post
 title: Circuit Unfolding
 subtitle: How to parallelize recursive DSP functions
-gh-repo: mnemocron/my-discrete-fpga
 gh-badge: [star, follow]
 tags: [theory, dsp, vhdl]
 comments: true
@@ -72,17 +71,27 @@ In practice, algorithms consist of many more internal state signals (memory!).
 It is not practical to perform the above calculations by hand.
 There is a systematic way to perform unfolding on circuits.
 
+- $$M$$ Unfolding factor (i.e. oversampling factor)
+- $$N_i$$ parallel computational block $$i$$ ($$i={0,1,2...M-1}$$)
+- $$L$$ previous (non-unfolded) delay elements
+- $$K$$ unfolded delay elements
 
+An internal state from block $$N_i$$ with $$L$$ delay elements is connected to block $$N_j$$ with $$K$$ delay elements.
+With the equations being:
 
+$$ j=(i+L) \mathrm{mod} M $$ (eq. 1)
 
+$$ K = \floor{ \frac{i+L}{M} } $$ (eq. 2)
 
-
-
-
-
-
+```
+for i=0 to M-1
+	j = (i+L) mod M
+	K = floor((i+L)/M)
+```
 
 --- 
+
+### Applied Example
 
 Let us consider a 3-tap IIR filter in _Fig. 6_.
 
@@ -95,6 +104,14 @@ Therefore the 3-tap IIR filter can be abstracted
 ![https://mnemocron.github.io/assets/img/unfolding/3tap-iir-abstract.png](https://mnemocron.github.io/assets/img/unfolding/3tap-iir-abstract.png){: .mx-auto.d-block :}
 **Fig 7:** _Abstract view of a 3-tap IIR filter._
 
+The IIR filter shall be unfolded by a factor of 2.
+It is therefore copied and each IIR instance shall process every other sample.
+The instances are denoted `N0` and `N1`.
+
+![https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-abstract.png](https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-abstract.png){: .mx-auto.d-block :}
+**Fig 8:** _Abstract view of two 3-tap IIR filters._
+
+Now the systematic equations can be applied and will result in the following table:
 
 | from block `i` | using `L` delays | to block `j` | using `K` delays |
 |:----|:----|:----|:----|
@@ -103,8 +120,17 @@ Therefore the 3-tap IIR filter can be abstracted
 |:----|:----|:----|:----|
 | `0` | `1` | `1` | `0` |
 | `0` | `2` | `0` | `1` |
-| `0` | `1` | `0` | `1` |
-| `0` | `2` | `1` | `1` |
+| `1` | `1` | `0` | `1` |
+| `1` | `2` | `1` | `1` |
+
+For example, the first row reads as follows:
+
+_"Connect the signal of block `N0` which had `1` delay element to block `N1` using `0` delay elements."_
+
+If done for every signal, the resulting circuit will look like this:
+
+![https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-unfolded.png](https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-unfolded.png){: .mx-auto.d-block :}
+**Fig 9:** _Fully unfolded 3-tap IIR filter._
 
 
 
