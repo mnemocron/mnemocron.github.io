@@ -8,10 +8,7 @@ comments: true
 author: Simon
 ---
 
-
-*This post is work in progress*
-
-![https://mnemocron.github.io/assets/img/unfolding/.png](https://mnemocron.github.io/assets/img/unfolding/.png){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/unfolding/5tap-iir-2phase-unfolded.png](https://mnemocron.github.io/assets/img/unfolding/5tap-iir-2phase-unfolded.png){: .mx-auto.d-block :}
 **Fig 1:** _Example of a 2-way unfolded (2x polyphasic) IIR filter processing two samples per clock cycle._
 
 We are all familiar with the growing demand in computaional power in DSP applications. Radio frequency applications require processing of several gigasamples on an FPGA that can only be clocked at a maximum of several hundred of MHz.
@@ -75,8 +72,11 @@ It is not practical to perform the above calculations by hand.
 There is a systematic way to perform unfolding on circuits.
 
 - $$M$$ Unfolding factor (i.e. oversampling factor)
-- $$N_i$$ parallel computational block $$i$$ ($$i={0,1,2...M-1}$$)
-- $$L$$ previous (non-unfolded) delay elements
+- $$N_i$$ parallel computational block $$i$$ (where $$i={0,1,2...M-1}$$)
+
+Therefore, there are $$M$$ blocks denoted $$N_i$$. The input samples into block $$N_i$$ are $$x[Mn+i]$$ and the output samples of block $$N_i$$ are $$y[Mn+i]$$.
+
+- $$L$$ previous (non-unfolded) internal delay elements
 - $$K$$ unfolded delay elements
 
 An internal state from block $$N_i$$ with $$L$$ delay elements is connected to block $$N_j$$ with $$K$$ delay elements.
@@ -84,35 +84,30 @@ With the equations being:
 
 $$ j=(i+L)\,\mathrm{mod}\,M $$
 
-$$ K = \lfloor{ \frac{i+L}{M} } \rfloor $$
-
-```
-for i=0 to M-1
-	j = (i+L) mod M
-	K = floor((i+L)/M)
-```
+$$ K = \left\lfloor{ \frac{i+L}{M} } \right\rfloor $$
 
 --- 
 
-### Applied Example
+### Applied Examples
+#### 2-tap IIR
 
-Let us consider a 3-tap IIR filter in _Fig. 6_.
+Let us consider a 2-tap IIR filter in _Fig. 6_.
 
-![https://mnemocron.github.io/assets/img/unfolding/3tap-iir.png](https://mnemocron.github.io/assets/img/unfolding/3tap-iir.png){: .mx-auto.d-block :}
-**Fig 6:** _3-tap IIR filter._
+![https://mnemocron.github.io/assets/img/unfolding/2tap-iir.png](https://mnemocron.github.io/assets/img/unfolding/2tap-iir.png){: .mx-auto.d-block :}
+**Fig 6:** _2-tap IIR filter._
 
 We are only interested in the memory elements in the feedback path.
-Therefore the 3-tap IIR filter can be abstracted
+Therefore the 2-tap IIR filter can be abstracted
 
-![https://mnemocron.github.io/assets/img/unfolding/3tap-iir-abstract.png](https://mnemocron.github.io/assets/img/unfolding/3tap-iir-abstract.png){: .mx-auto.d-block :}
-**Fig 7:** _Abstract view of a 3-tap IIR filter._
+![https://mnemocron.github.io/assets/img/unfolding/2tap-iir-abstract.png](https://mnemocron.github.io/assets/img/unfolding/2tap-iir-abstract.png){: .mx-auto.d-block :}
+**Fig 7:** _Abstract view of a 2-tap IIR filter._
 
 The IIR filter shall be unfolded by a factor of 2.
 It is therefore copied and each IIR instance shall process every other sample.
 The instances are denoted `N0` and `N1`.
 
-![https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-abstract.png](https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-abstract.png){: .mx-auto.d-block :}
-**Fig 8:** _Abstract view of two 3-tap IIR filters._
+![https://mnemocron.github.io/assets/img/unfolding/2tap-iir-2phase-abstract.png](https://mnemocron.github.io/assets/img/unfolding/2tap-iir-2phase-abstract.png){: .mx-auto.d-block :}
+**Fig 8:** _Abstract view of two 2-tap IIR filters._
 
 Now the systematic equations can be applied and will result in the following table:
 
@@ -129,12 +124,31 @@ _"Connect the signal of block `N0` which had `1` delay element to block `N1` usi
 
 If done for every signal, the resulting circuit will look like this:
 
-![https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-unfolded.png](https://mnemocron.github.io/assets/img/unfolding/3tap-iir-2phase-unfolded.png){: .mx-auto.d-block :}
-**Fig 9:** _Fully unfolded 3-tap IIR filter._
+![https://mnemocron.github.io/assets/img/unfolding/2tap-iir-2phase-unfolded.png](https://mnemocron.github.io/assets/img/unfolding/2tap-iir-2phase-unfolded.png){: .mx-auto.d-block :}
+**Fig 9:** _Fully unfolded 2-tap IIR filter._
+
+#### 5-tap IIR
+
+Another example for good measure.
+Take a 5-tap IIR with more internal delay elements.
+
+![https://mnemocron.github.io/assets/img/unfolding/5tap-iir-abstract.png](https://mnemocron.github.io/assets/img/unfolding/5tap-iir-abstract.png){: .mx-auto.d-block :}
+**Fig 7:** _Abstract view of a 5-tap IIR filter._
+
+| **`i`** | **`L`** | **`j`** | **`K`** |
+|:----|:----|:----|:----|
+| `0` | `5` | `1` | `2` |
+| `0` | `4` | `0` | `2` |
+| `0` | `3` | `1` | `1` |
+| `0` | `2` | `0` | `1` |
+| `0` | `1` | `1` | `0` |
+| `1` | `5` | `0` | `3` |
+| `1` | `4` | `1` | `2` |
+| `1` | `3` | `0` | `2` |
+| `1` | `2` | `1` | `1` |
+| `1` | `1` | `0` | `1` |
 
 
-
-
-
-
+![https://mnemocron.github.io/assets/img/unfolding/5tap-iir-2phase-unfolded.png](https://mnemocron.github.io/assets/img/unfolding/5tap-iir-2phase-unfolded.png){: .mx-auto.d-block :}
+**Fig 11:** _Fully unfolded 5-tap IIR filter._
 
