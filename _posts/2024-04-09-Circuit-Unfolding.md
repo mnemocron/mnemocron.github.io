@@ -8,8 +8,6 @@ comments: true
 author: Simon
 ---
 
-![https://mnemocron.github.io/assets/img/unfolding/5tap-iir-2phase-unfolded.png](https://mnemocron.github.io/assets/img/unfolding/5tap-iir-2phase-unfolded.png){: .mx-auto.d-block :}
-
 We are all familiar with the growing demand in computaional power in DSP applications. Radio frequency applications require processing of several gigasamples on an FPGA that can only be clocked at a maximum of several hundred of MHz.
 This facilitates the need to use massive parallelization of DSP algorithms - a so called **multi rate** system. 
 For _non-recursive_ algorithms like FIR filters this is a trivial no-brainer. See the end of this article for a demonstration.
