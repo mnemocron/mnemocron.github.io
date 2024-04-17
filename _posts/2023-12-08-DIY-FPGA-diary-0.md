@@ -44,9 +44,12 @@ If you take the most flexible crosspoint matrix available, you will see that one
 **Fig 2:** _6 MOSFET switches required to build a crosspoint with maximum flexibility._ ([S. Dutt et al. _"A Search-Based Bump-and-Refit Approach to Incremental Routing for ECO Applications in FPGAs"_](https://www.researchgate.net/publication/232635351))
 
 If I were to apply this type of approach for my own architecture, I can estimate:
-- 6 switch ICs per crosspoint
+- 6 switch ICs per cross point
 - a 4 bit FPGA should have at least a 4x4 crosspoint switch per logic slice
 - 4x4x6 = 96 (!)
+
+![https://mnemocron.github.io/assets/img/fpga-diary-0/tssop-matrix.png](https://mnemocron.github.io/assets/img/fpga-diary-0/tssop-matrix.png){: .mx-auto.d-block :}
+**Fig 3:** _6 switches per interconnect cross point using TSSOP6 MOSFETs for each switch_)
 
 That is an insane amount of SMT chips. This will be a multitude of pain in several design steps down the line:
 - finding a switch IC which is cheap and has a digikey / JLC stock pile of ~1'000 pcs
@@ -103,12 +106,12 @@ The CB I went with has a horizontal (inputs) and a vertical (outputs) instance p
 This separation is something that is used in some FPGAs. 
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-0/clb-interconnect-matrix.png](https://mnemocron.github.io/assets/img/fpga-diary-0/clb-interconnect-matrix.png){: .mx-auto.d-block :}
-**Fig 3:** _Simple interconnect concept with several S-boxes routing the interconnect and C-boxes connecting the inputs and outputs to the CLB._ ([P. Kaufmann, _"Adapting Hardware Systems by Means of Multi-Objective Evolution"_](https://www.researchgate.net/publication/282769665))
+**Fig 4:** _Simple interconnect concept with several S-boxes routing the interconnect and C-boxes connecting the inputs and outputs to the CLB._ ([P. Kaufmann, _"Adapting Hardware Systems by Means of Multi-Objective Evolution"_](https://www.researchgate.net/publication/282769665))
 
 The architecture I dreamt up looks like the one in _Fig. 1_ above and in a broader sense with modular tiles like this:
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-0/fpga-fabric-matrix.png](https://mnemocron.github.io/assets/img/fpga-diary-0/fpga-fabric-matrix.png){: .mx-auto.d-block :}
-**Fig 4:** _Multiple tiles can be stacked in 2D to build a full FPGA. More features like I/O and PLL resources can be added at the edge of this matrix._
+**Fig 5:** _Multiple tiles can be stacked in 2D to build a full FPGA. More features like I/O and PLL resources can be added at the edge of this matrix._
 
 In later posts on this blog I will dive further into the details of each block and why things are the way they are.
 What I did evaluate on this architecture level though are, if it is efficient or possible at all to run certain applications on it.
@@ -119,19 +122,19 @@ The heart of the interconnect is the switch box (`SW`) which can route signals f
 Next is the horizontal connection box (`CBh`) which has a 4 bit output to its south pole into the `CLB` inputs.
 A great help here was a comment online that input selection can be done using multiplexers instead of signal switches, facilitating a much simpler configuration. I went with 8:1 multiplexers to offer a great variation of input combinations for the CLB.
 An important feature of the `CLB` is 4+4 bit addition. This has to be done by sourcing both the north and south bus directly as 4 bit input vector.
-Another feature of the `CLB` and the interconnect is the direct east/west connection which allows LUT cascading without the need of interconnect resources (_Fig 5_). A task that in Xilinx FPGAs would be done using the MUXF7, MUXF8 etc. to combine multiple LUTs to a single output.
+Another feature of the `CLB` and the interconnect is the direct east/west connection which allows LUT cascading without the need of interconnect resources (_Fig 6_). A task that in Xilinx FPGAs would be done using the MUXF7, MUXF8 etc. to combine multiple LUTs to a single output.
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-0/application-mux-f7.png](https://mnemocron.github.io/assets/img/fpga-diary-0/application-mux-f7.png){: .mx-auto.d-block :}
-**Fig 5:** _Cascading LUTs to expand function input arguments beyond 4 bit._
+**Fig 6:** _Cascading LUTs to expand function input arguments beyond 4 bit._
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-0/4bit-counter-7seg.png](https://mnemocron.github.io/assets/img/fpga-diary-0/4bit-counter-7seg.png){: .mx-auto.d-block :}
-**Fig 6:** _4 bit counter with BCD to 7-segment decoder._
+**Fig 7:** _4 bit counter with BCD to 7-segment decoder._
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-0/4bit-counter-adder.png](https://mnemocron.github.io/assets/img/fpga-diary-0/4bit-counter-adder.png){: .mx-auto.d-block :}
-**Fig 7:** _4 bit counter with 4 bit adder to add offset value._
+**Fig 8:** _4 bit counter with 4 bit adder to add offset value._
 
 ![https://mnemocron.github.io/assets/img/fpga-diary-0/double-flop-cdc.png](https://mnemocron.github.io/assets/img/fpga-diary-0/double-flop-cdc.png){: .mx-auto.d-block :}
-**Fig 8:** _Looping back a single bit signal to create a double-flopped signal._
+**Fig 9:** _Looping back a single bit signal to create a double-flopped signal._
 
 ---
 

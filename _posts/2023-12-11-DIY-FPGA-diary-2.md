@@ -71,7 +71,7 @@ This switch worked in my simulations. But I would also need more complex switche
 This switch consists of 4 `inout` ports, 4 enable switches for each port and a common crosspoint switch to connect the north-south axis with the east-west axis.
 Using the same method will run into delta-cycle problems because once either of the ports is driven by the internal concurrent assignment, it will trigger the other if-statement to infinity. The simulator cannot converge the result. This error only seems to occur with the more complex crosspoint switch and only when connecting it to other `inout` ports of the interconnect. 
 
-For the crosspoint swith I had to use a different approach. 
+For the crosspoint switch I had to use a different approach. 
 The concurrent assignment would determine at startup, which of its `inout` ports is the active driving source. 
 After the active driver is determined, it will treat all other ports as followers to that source.
 The disadvantage of this method is that it will not allow for bitstream reconfiguration once the simulation has started.
