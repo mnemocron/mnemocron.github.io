@@ -10,7 +10,7 @@
 ############################
 
 # Name of website
-title: my 4 bits on FPGA
+title: simons blog
 
 # Your name to show in the footer
 author: Simon Burkhardt
@@ -78,7 +78,7 @@ social-network-links:
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
-rss-description: This website is a virtual proof that I'm awesome
+rss-description: A blog about FPGA and other shenanigans in embedded electronics
 
 ###########################
 # --- General options --- #
@@ -88,7 +88,7 @@ rss-description: This website is a virtual proof that I'm awesome
 share-links-active:
   twitter: false
   facebook: false
-  linkedin: true
+  linkedin: false
   vk: false
 
 # How to display the link to your website in the footer
@@ -239,7 +239,8 @@ giscus:
 ################
 
 # Ruby Date Format to show dates of posts
-date_format: "%B %-d, %Y"
+#date_format: "%B %-d, %Y"
+date_format: "%Y-%m-%d"
 
 # Facebook App ID
 #fb_app_id: ""
@@ -249,7 +250,7 @@ date_format: "%B %-d, %Y"
 #################################################################################
 
 # Output options (more information on Jekyll's site)
-timezone: "America/Toronto"
+timezone: "Europe/Berlin"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
