@@ -28,7 +28,7 @@ I will spare you the nightmarish details of ideas that I previously envisioned f
 
 ## How the compiler works
 
-![https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-1.png](https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-1.png){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-1.jpg](https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-1.jpg){: .mx-auto.d-block :}
 **Fig 2:** _How different lines of code map to features on a single FPGA tile._
 
 Consider the relationship between the lines of code in _Fig. 2_ to the enabled bits in the bitstream. At this point it should be evident why I picked green LEDs to highlight the bitstream configuration. It reminds me of the green wires in the _Implementation_ view in Vivado.
@@ -46,7 +46,7 @@ In this example I looped back the `bus[0]` signal and let the LUT invert it to a
 
 With this approach the C-code can grow quite a bit longer for the necessary configuration of a bitstream for the previously described 4-bit counter.
 
-![https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-2.png](https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-2.png){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-2.jpg](https://mnemocron.github.io/assets/img/fpga-diary-6/fpga-arduino-2.jpg){: .mx-auto.d-block :}
 **Fig 4:** _4-bit counter first written in C to generate the bitstream._
 
 ## Fizz-Buzz on multiple Tiles
@@ -62,12 +62,12 @@ Fizz Buff is a well known tech interview question.
 On a sidenote: I am curious if you could build a high performance fizz buzz on FPGA and send it over 100G ethernet to the CPU to beat the [High throughput Fizz Buzz challenge](https://codegolf.stackexchange.com/questions/215216/high-throughput-fizz-buzz).
 Anyways, in my case Fizz-Buzz is an easy extension to the 4-bit counter.
 
-![https://mnemocron.github.io/assets/img/fpga-diary-6/fizz-buzz-truthtable.png](https://mnemocron.github.io/assets/img/fpga-diary-6/fizz-buzz-truthtable.png){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/fpga-diary-6/lut-fizz-buzz.png](https://mnemocron.github.io/assets/img/fpga-diary-6/lut-fizz-buzz.png){: .mx-auto.d-block :}
 **Fig 5:** _Creating the LUT contents from the truth table of Fizz-Buzz._
 
 I connected the 4 signals of the counter that are in the loop for the counter to the inputs of the 2nd CLB. Next, only 2 LUTs of the CLB are used to output `1` on either the number 3 (Fizz) or 5 (Buzz). And just because I can, I routed the Fizz and Buzz signals back up north parallel to the existing 4-bit counter.
 
-![https://mnemocron.github.io/assets/img/fpga-diary-6/2-slices-arduino.jpg](https://mnemocron.github.io/assets/img/fpga-diary-6/2-slicHigh es-arduino.jpg){: .mx-auto.d-block :}
+![https://mnemocron.github.io/assets/img/fpga-diary-6/2-slices-arduino.jpg](https://mnemocron.github.io/assets/img/fpga-diary-6/2-slices-arduino.jpg){: .mx-auto.d-block :}
 **Fig 6:** _Programming the FPGA using the Arduino library._
 
 
