@@ -60,7 +60,7 @@ yt-dlp "https://www.youtube.com/watch?v=deTJ513J07Y" -f 'bestvideo[height<=360]'
 Use the almighty `ffmpeg` to perform crop, rotate and reencoding with correct pixel format.
 
 ```
-ffmpeg -i beach-full.webm -vf "crop=90:220:360:0,transpose=2,scale=trunc(oh*a/2)*2:64" -pix_fmt gbrp beach.webm
+ffmpeg -i beach-full.webm -vf "crop=90:360:220:0,transpose=2,scale=trunc(oh*a/2)*2:64" -pix_fmt gbrp beach.webm
 ```
 
 ![https://mnemocron.github.io/assets/img/rgbmatrix/ffmpeg-crop.png](https://mnemocron.github.io/assets/img/rgbmatrix/ffmpeg-crop.png){: .mx-auto.d-block :}
